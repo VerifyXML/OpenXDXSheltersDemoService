@@ -1,7 +1,7 @@
 <as:CAM
  xmlns:as="http://www.oasis-open.org/committees/cam"
  xmlns:camed="http://jcam.org.uk/editor"
- xmlns:xs="http://www.w3.org/2001/XMLSchema" CAMlevel="1" version="1.1" cameditor="2.5.0">
+ xmlns:xs="http://www.w3.org/2001/XMLSchema" CAMlevel="1" version="1.1" cameditor="3.0.0">
   <as:Header>
     <as:Description>No Description</as:Description>
     <as:Owner>Not Set</as:Owner>
@@ -15,12 +15,12 @@
     <as:namespace prefix="camed">http://jcam.org.uk/editor</as:namespace>
   </as:Namespaces>
   <as:Parameters>
-    <as:Parameter name="verify_SHELTERS.Providers" default="exists%28select+1+%0D%0A++++++++++++++++from+verify_SHELTERS.ProviderLocations+pl%2C+verify_SHELTERS.Addresses+adr%0D%0A+++++++++++++++where+verify_SHELTERS.Providers.ProviderID+%3D+pl.ProviderID%0D%0A+++++++++++++++++and+pl.AddressID+%3D+adr.AddressID%0D%0A+++++++++++++++++and+adr.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
+    <as:Parameter name="verify_SHELTERS.Providers" default="exists%28select+1+%0D%0A++++++++++++++++from+ProviderLocations+pl%2C+Addresses+adr%0D%0A+++++++++++++++where+Providers.ProviderID+%3D+pl.ProviderID%0D%0A+++++++++++++++++and+pl.AddressID+%3D+adr.AddressID%0D%0A+++++++++++++++++and+adr.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
   </as:Parameters>
   <as:AssemblyStructure>
     <as:Structure ID="Shelters" reference="" taxonomy="XML">
       <as:parameters>
-        <as:Parameter name="verify_SHELTERS.Providers" default="exists%28select+1+%0D%0A++++++++++++++++from+verify_SHELTERS.ProviderLocations+pl%2C+verify_SHELTERS.Addresses+adr%0D%0A+++++++++++++++where+verify_SHELTERS.Providers.ProviderID+%3D+pl.ProviderID%0D%0A+++++++++++++++++and+pl.AddressID+%3D+adr.AddressID%0D%0A+++++++++++++++++and+adr.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
+        <as:Parameter name="verify_SHELTERS.Providers" default="exists%28select+1+%0D%0A++++++++++++++++from+ProviderLocations+pl%2C+Addresses+adr%0D%0A+++++++++++++++where+Providers.ProviderID+%3D+pl.ProviderID%0D%0A+++++++++++++++++and+pl.AddressID+%3D+adr.AddressID%0D%0A+++++++++++++++++and+adr.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
       </as:parameters>
       <as:Element name="SheltersLookup" path="/SheltersLookup" namespace="" namespacePrefix="">
         <as:Rule>
@@ -144,8 +144,8 @@
               </as:Element>
               <as:Element name="Street" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/Street" namespace="" namespacePrefix="" exampleValue="%string%">
                 <as:Rule>
-                  <as:constraint action="makeOptional()" xpath="//AddressDetails/Street" />
                   <as:constraint action="setLength(1-2000)" xpath="//AddressDetails/Street" />
+                  <as:constraint action="makeOptional()" xpath="//AddressDetails/Street" />
                 </as:Rule>
                 <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/Street">
                   <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Street</camed:documentation>
@@ -186,8 +186,8 @@
               </as:Element>
               <as:Element name="LngValue" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LngValue" namespace="" namespacePrefix="" exampleValue="%1234.00%">
                 <as:Rule>
-                  <as:constraint action="setLength(1-11)" xpath="//AddressDetails/LngValue" />
                   <as:constraint action="setNumberMask(#########.##)" xpath="//AddressDetails/LngValue" />
+                  <as:constraint action="setLength(1-11)" xpath="//AddressDetails/LngValue" />
                 </as:Rule>
                 <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LngValue">
                   <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Lng</camed:documentation>
