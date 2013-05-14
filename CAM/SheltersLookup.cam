@@ -1,0 +1,140 @@
+<as:CAM
+ xmlns:as="http://www.oasis-open.org/committees/cam"
+ xmlns:camed="http://jcam.org.uk/editor"
+ xmlns:xml="http://www.w3.org/XML/1998/namespace"
+ xmlns:xs="http://www.w3.org/2001/XMLSchema" CAMlevel="1" version="1.1" cameditor="2.5.0">
+  <as:Header>
+    <as:Description>No Description</as:Description>
+    <as:Owner>Not Set</as:Owner>
+    <as:Version>0.1</as:Version>
+    <as:DateTime>2013-05-13T20:47:20</as:DateTime>
+    <as:Parameters>
+      <as:Parameter name="verify_SHELTERS.Providers" default="exists%28select+1+%0D%0A++++++++++++++++from+verify_SHELTERS.ProviderLocations+pl%2C+verify_SHELTERS.Addresses+adr%0D%0A+++++++++++++++where+verify_SHELTERS.Providers.ProviderID+%3D+pl.ProviderID%0D%0A+++++++++++++++++and+pl.AddressID+%3D+adr.AddressID%0D%0A+++++++++++++++++and+adr.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
+    </as:Parameters>
+  </as:Header>
+  <as:AssemblyStructure>
+    <as:Structure ID="Shelters" taxonomy="XML" reference="">
+      <SheltersLookup>
+        <ProviderDetail>
+          <ProviderID>%123456%</ProviderID>
+          <Name>%string%</Name>
+          <Description>%string%</Description>
+          <URL>%string%</URL>
+          <ProviderLocation>
+            <LocationID>%123456%</LocationID>
+            <Name>%string%</Name>
+            <ContactName>%string%</ContactName>
+            <ContactPhoneValue>%123456%</ContactPhoneValue>
+            <UnitsTotal>%string%</UnitsTotal>
+            <UnitsAvailable>%string%</UnitsAvailable>
+            <UnitsOccupied>%string%</UnitsOccupied>
+            <AddressDetails>
+              <AddressID>%123456%</AddressID>
+              <Street>%string%</Street>
+              <City>%string%</City>
+              <State>%string%</State>
+              <ZIP>%string%</ZIP>
+              <LatValue>%1234.00%</LatValue>
+              <LngValue>%1234.00%</LngValue>
+            </AddressDetails>
+          </ProviderLocation>
+        </ProviderDetail>
+      </SheltersLookup>
+    </as:Structure>
+  </as:AssemblyStructure>
+  <as:BusinessUseContext>
+    <as:Rules>
+      <as:default>
+        <as:context>
+          <as:constraint action="setNumberMask(//AddressDetails/AddressID,##########)" />
+          <as:constraint action="setLength(//AddressDetails/City,1-200)" />
+          <as:constraint action="setLength(//AddressDetails/LatValue,1-11)" />
+          <as:constraint action="setNumberMask(//AddressDetails/LatValue,#########.##)" />
+          <as:constraint action="setLength(//AddressDetails/LngValue,1-11)" />
+          <as:constraint action="setNumberMask(//AddressDetails/LngValue,#########.##)" />
+          <as:constraint action="setLength(//AddressDetails/State,1-2)" />
+          <as:constraint action="makeOptional(//AddressDetails/Street)" />
+          <as:constraint action="setLength(//AddressDetails/Street,1-2000)" />
+          <as:constraint action="setLength(//AddressDetails/ZIP,1-5)" />
+          <as:constraint action="makeOptional(//ProviderDetail/Description)" />
+          <as:constraint action="setLength(//ProviderDetail/Description,1-16777215)" />
+          <as:constraint action="setLength(//ProviderDetail/Name,1-200)" />
+          <as:constraint action="setNumberMask(//ProviderDetail/ProviderID,##########)" />
+          <as:constraint action="makeRepeatable(//ProviderDetail/ProviderLocation)" />
+          <as:constraint action="makeOptional(//ProviderDetail/URL)" />
+          <as:constraint action="setLength(//ProviderDetail/URL,1-255)" />
+          <as:constraint action="setLength(//ProviderLocation/ContactName,1-120)" />
+          <as:constraint action="setNumberMask(//ProviderLocation/ContactPhoneValue,##########)" />
+          <as:constraint action="setNumberMask(//ProviderLocation/LocationID,##########)" />
+          <as:constraint action="setLength(//ProviderLocation/Name,1-255)" />
+          <as:constraint action="makeRepeatable(//SheltersLookup/ProviderDetail)" />
+        </as:context>
+      </as:default>
+    </as:Rules>
+  </as:BusinessUseContext>
+  <as:Extension name="uk.org.jcam.camed.extensions.StructureAnnotations">
+    <camed:annotation item="//ProviderDetail/ProviderLocation">
+      <camed:documentation type="Definition">Provider Locations Information. Includes Services details</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="//ProviderLocation/AddressDetails">
+      <camed:documentation type="Definition">Location Addresses with Geo Location information.</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="//SheltersCatalog/ProviderDetail">
+      <camed:documentation type="Definition">Service Providers</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/Description">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Providers.Description</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/Name">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Providers.Name</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderID">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Providers.ProviderID</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/AddressID">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.AddressID</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/City">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.City</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LatValue">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Lat</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LngValue">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Lng</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/State">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.State</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/Street">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Street</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/ZIP">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.ZIP</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/ContactName">
+      <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.ContactName</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/ContactPhoneValue">
+      <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.ContactPhone</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/LocationID">
+      <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.LocationID</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/Name">
+      <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.Name</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsAvailable">
+      <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsAvailable</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsOccupied">
+      <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsOccupied</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsTotal">
+      <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsTotal</camed:documentation>
+    </camed:annotation>
+    <camed:annotation item="/SheltersLookup/ProviderDetail/URL">
+      <camed:documentation type="DBMapping">verify_SHELTERS.Providers.URL</camed:documentation>
+    </camed:annotation>
+  </as:Extension>
+</as:CAM>

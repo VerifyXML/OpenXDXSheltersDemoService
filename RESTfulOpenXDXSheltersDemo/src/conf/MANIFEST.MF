@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.4
+Created-By: 1.6.0_27-b27 (Sun Microsystems Inc.)
+Bundle-Name: OpenXDX Shelters RESTful Services Demo
+Bundle-Version: 1.0
+Bundle-Date: 2013-05-14 09:53:50 CDT
+Implementation-Title: OpenXDX Shelters RESTful Services Demo
+Implementation-Version: 1.0
+Implementation-URL: http://verifyxml.org
+
