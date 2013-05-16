@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<schemas xmlns='http://xml.netbeans.org/schema/JAXBWizConfig' destdir='build/generated-sources/jaxb' projectName='ShelterSearchDemo' version='1.0'>
+	<schema type='-xmlschema' package='org.verifyxml.jaxb' name='OpenXDXShelterService'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='src/conf/xml-resources/jaxb/OpenXDXShelterService/SheltersLookup.xsd' origLocation='../CAM/SheltersLookup.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+	<schema type='-xmlschema' package='org.geocodes.postalcodes' name='GeoCodes'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='src/conf/xml-resources/jaxb/GeoCodes/GeoCodes.xsd' origLocation='../CAM/GeoCodes.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+</schemas>
