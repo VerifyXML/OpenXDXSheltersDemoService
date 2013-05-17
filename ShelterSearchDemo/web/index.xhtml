@@ -41,7 +41,7 @@
                     <p:ajax event="overlaySelect" listener="#{sheltersSearchBean.onMarkerSelect}" />                     
                     <p:ajax event="stateChange" listener="#{sheltersSearchBean.onMapStateChange}" />
                     
-                    <p:gmapInfoWindow>  
+                    <p:gmapInfoWindow maxWidth="400">  
                         <p:outputPanel style="height: 500px;width: 300px;display:block;margin:auto:"> 
                             <h:panelGrid columns="1" >
                                 <h:outputText value="#{sheltersSearchBean.marker.title}" style="font-size: larger;font-weight:  bold"/>
@@ -53,8 +53,8 @@
                                 <h:outputText value="#{sheltersSearchBean.markerLocationDetails.addressDetails.ZIP.value}" />                                
                             </h:panelGrid>
                             <p:spacer/>
-                            <p:panel header="Contact Information" style="font-size: x-small">
-                                <h:panelGrid columns="2" width="200">                                
+                            <p:panel header="Contact Information" style="font-size: x-small;width:280px">
+                                <h:panelGrid columns="2" >                                
                                     <h:outputText value="Name:" style="font-weight:  bold" />
                                     <h:outputText value="#{sheltersSearchBean.markerLocationDetails.contactName.value}" />
                                     <h:outputText value="Phone:" style="font-weight:  bold" />
@@ -62,8 +62,8 @@
                                 </h:panelGrid>
                             </p:panel>
                             <p:spacer/>                            
-                            <p:panel header="Space Availability" style="font-size: x-small">
-                                <h:panelGrid columns="2" width="200">                                
+                            <p:panel header="Space Availability" style="font-size: x-small;width:280px">
+                                <h:panelGrid columns="2" >                                
                                     <h:outputText value="Unuts Total:" style="font-weight:  bold" />
                                     <h:outputText value="#{sheltersSearchBean.markerLocationDetails.unitsTotal}" />
                                     <h:outputText value="Unuts Available:" style="font-weight:  bold" />
@@ -72,13 +72,20 @@
                                     <h:outputText value="#{sheltersSearchBean.markerLocationDetails.unitsOccupied}" />                                 
                                 </h:panelGrid>
                             </p:panel>
-                            <p:panel header="Provider Details" style="font-size: x-small">
-                                <h:panelGrid columns="1" width="200">                                
-                                    <h:outputText value="#{sheltersSearchBean.markerLocationDetails.providersDetails.name.value}" />
-                                    <h:outputText value="#{sheltersSearchBean.markerLocationDetails.providersDetails.URL.value}" />
-                                    <h:outputText value="#{sheltersSearchBean.markerLocationDetails.providersDetails.description.value}" />                                
+                            <p:panel header="Provider Details" style="font-size: x-small;width:280px">
+                                <h:panelGrid columns="1">                                
+                                    <h:outputText value="#{sheltersSearchBean.markerLocationDetails.providersDetails.name.value}" style="font-weight:  bold"/>                                    
+                                    <p:spacer/>
+                                    <h:outputLink value="#{sheltersSearchBean.markerLocationDetails.providersDetails.URL.value}">
+                                        #{sheltersSearchBean.markerLocationDetails.providersDetails.URL.value}
+                                    </h:outputLink>                                    
+                                    <p:spacer/>
+                                    <p:scrollPanel style="font-size: x-small; width:240px;height:100px">
+                                        <h:outputText value="#{sheltersSearchBean.markerLocationDetails.providersDetails.description.value}" />                                                               
+                                    </p:scrollPanel>        
                                 </h:panelGrid>
                             </p:panel>
+                            
                         </p:outputPanel>  
                     </p:gmapInfoWindow>                    
                 </p:gmap> 
@@ -114,7 +121,10 @@
                                 <h:outputLabel value="miles" />
                                 <p:spacer/>
                                 <p:slider for="radiusValue"  minValue="0" maxValue="30" step="1"/>
-                                <p:spacer/>                                
+                                <p:spacer/>
+                                <h:outputLabel value="Available only:" />
+                                <p:selectBooleanCheckbox value="#{sheltersSearchBean.searchAvailableOnly}" /> 
+                                <p:spacer/>
                             </h:panelGrid>                             
                         </p:panel>
                         <p:commandButton id="srchBttn" value="Search" actionListener="#{sheltersSearchBean.doZipSearch()}" update=":resultForm:providresCarusel,:mapData"/>                        

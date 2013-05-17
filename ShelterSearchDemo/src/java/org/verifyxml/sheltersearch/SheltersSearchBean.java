@@ -45,6 +45,7 @@ import org.verifyxml.sheltersearch.handler.OpenXDXServiceHandler;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -85,8 +86,9 @@ public class SheltersSearchBean implements Serializable {
     private Marker marker;  
     private LatLng mapCenter;
     private int zoomLevel = 5;
-    private transient String selectedLocationId;  
-        
+    private transient String selectedLocationId;
+    private boolean searchAvailableOnly = false;
+       
     /**
      * Creates a new instance of SheltersSearchBean
      */
@@ -124,7 +126,7 @@ public class SheltersSearchBean implements Serializable {
         resultMarkers = new HashMap<String, Marker>();
         providerLocations = new ArrayList<ProviderLocation>();
         mapCenter = null;
-        zoomLevel = 12;
+        zoomLevel = 5;
         
         if(this.zipSearch > 0){
             try{
@@ -154,22 +156,28 @@ public class SheltersSearchBean implements Serializable {
                     
                     SheltersLookup providersLookup = openXDXService.getSheltersData(zipList.toString());
                                         
-                    if(providersLookup != null && !providersLookup.getProviderLocation().isEmpty()){
+                    if(providersLookup != null && providersLookup.getProviderLocation() != null){
                         providerLocations = providersLookup.getProviderLocation();
                         if(providerLocations != null && !providerLocations.isEmpty()){
-                            for(ProviderLocation providerLocation:providerLocations){
-                                Marker pharmacyMarker = null;
-                                //FIXME temporary check for dummy data
-                                if(!providerLocation.getName().getValue().equals("string")){
-                                    pharmacyMarker =  new Marker(
-                                        new LatLng(
-                                            Double.parseDouble(providerLocation.getAddressDetails().getLatValue().toString()), 
-                                            Double.parseDouble(providerLocation.getAddressDetails().getLngValue().toString())), 
-                                        providerLocation.getName().getValue(), providerLocation);
-                                }
-                                if(pharmacyMarker != null){
-                                    resultMarkers.put(Integer.toString(providerLocation.getLocationID()), pharmacyMarker);
-                                    mapModel.addOverlay(pharmacyMarker);  
+                            Iterator<ProviderLocation> providerIterator = providerLocations.iterator();
+                            while(providerIterator.hasNext()){
+                                ProviderLocation providerLocation = providerIterator.next();
+                                if(searchAvailableOnly && Integer.parseInt(providerLocation.getUnitsAvailable()) == 0){
+                                    providerIterator.remove();
+                                }else{
+                                    Marker pharmacyMarker = null;
+                                    //FIXME temporary check for dummy data
+                                    if(!providerLocation.getName().getValue().equals("string")){
+                                        pharmacyMarker =  new Marker(
+                                            new LatLng(
+                                                Double.parseDouble(providerLocation.getAddressDetails().getLatValue().toString()), 
+                                                Double.parseDouble(providerLocation.getAddressDetails().getLngValue().toString())), 
+                                            providerLocation.getName().getValue(), providerLocation);
+                                    }
+                                    if(pharmacyMarker != null){
+                                        resultMarkers.put(Integer.toString(providerLocation.getLocationID()), pharmacyMarker);
+                                        mapModel.addOverlay(pharmacyMarker);  
+                                    }
                                 }
                             }
                             if(!resultMarkers.isEmpty()){
@@ -264,4 +272,21 @@ public class SheltersSearchBean implements Serializable {
         this.zoomLevel = zoomLevel;
     }
     
+    /**
+     * Get the value of searchAvailableOnly
+     *
+     * @return the value of searchAvailableOnly
+     */
+    public boolean isSearchAvailableOnly() {
+        return searchAvailableOnly;
+    }
+
+    /**
+     * Set the value of searchAvailableOnly
+     *
+     * @param searchAvailableOnly new value of searchAvailableOnly
+     */
+    public void setSearchAvailableOnly(boolean searchAvailableOnly) {
+        this.searchAvailableOnly = searchAvailableOnly;
+    }
 }
