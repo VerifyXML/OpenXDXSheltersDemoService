@@ -15,184 +15,187 @@
     <as:namespace prefix="camed">http://jcam.org.uk/editor</as:namespace>
   </as:Namespaces>
   <as:Parameters>
-    <as:Parameter name="verify_SHELTERS.Providers" default="exists%28select+1+%0D%0A++++++++++++++++from+ProviderLocations+pl%2C+Addresses+adr%0D%0A+++++++++++++++where+Providers.ProviderID+%3D+pl.ProviderID%0D%0A+++++++++++++++++and+pl.AddressID+%3D+adr.AddressID%0D%0A+++++++++++++++++and+adr.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
+    <as:Parameter name="verify_SHELTERS.ProviderLocations" default="exists%28select+1+%0D%0A+++++++++from+Addresses%0D%0A++++++++where+ProviderLocations.AddressID+%3D+Addresses.AddressID%0D%0A++++++++++and+Addresses.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
   </as:Parameters>
   <as:AssemblyStructure>
-    <as:Structure ID="Shelters" reference="" taxonomy="XML">
+    <as:Structure ID="SheltersLookup" reference="" taxonomy="XML">
       <as:parameters>
-        <as:Parameter name="verify_SHELTERS.Providers" default="exists%28select+1+%0D%0A++++++++++++++++from+ProviderLocations+pl%2C+Addresses+adr%0D%0A+++++++++++++++where+Providers.ProviderID+%3D+pl.ProviderID%0D%0A+++++++++++++++++and+pl.AddressID+%3D+adr.AddressID%0D%0A+++++++++++++++++and+adr.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
+        <as:Parameter name="verify_SHELTERS.ProviderLocations" default="exists%28select+1+%0D%0A+++++++++from+Addresses%0D%0A++++++++where+ProviderLocations.AddressID+%3D+Addresses.AddressID%0D%0A++++++++++and+Addresses.ZIP+in+%28%24ZIPSearch%29%29" use="dbmapping" />
       </as:parameters>
       <as:Element name="SheltersLookup" path="/SheltersLookup" namespace="" namespacePrefix="">
         <as:Rule>
           <as:constraint action="makeMandatory()" />
         </as:Rule>
-        <as:Element name="ProviderDetail" path="/SheltersLookup/ProviderDetail" namespace="" namespacePrefix="">
+        <as:Element name="ProviderLocation" path="/SheltersLookup/ProviderLocation" namespace="" namespacePrefix="">
           <as:Rule>
-            <as:constraint action="makeRepeatable()" xpath="//SheltersLookup/ProviderDetail" />
+            <as:constraint action="makeRepeatable()" xpath="//SheltersLookup/ProviderLocation" />
           </as:Rule>
-          <as:Element name="ProviderID" path="/SheltersLookup/ProviderDetail/ProviderID" namespace="" namespacePrefix="" exampleValue="%123456%">
+          <camed:annotation item="//SheltersLookup/ProviderLocation">
+            <camed:documentation type="Definition">Provider Locations Information. Includes Services details</camed:documentation>
+          </camed:annotation>
+          <as:Element name="LocationID" path="/SheltersLookup/ProviderLocation/LocationID" namespace="" namespacePrefix="" exampleValue="%123456%">
             <as:Rule>
-              <as:constraint action="setNumberMask(##########)" xpath="//ProviderDetail/ProviderID" />
+              <as:constraint action="setNumberMask(##########)" xpath="//ProviderLocation/LocationID" />
             </as:Rule>
-            <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderID">
-              <camed:documentation type="DBMapping">verify_SHELTERS.Providers.ProviderID</camed:documentation>
+            <camed:annotation item="/SheltersLookup/ProviderLocation/LocationID">
+              <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.LocationID</camed:documentation>
             </camed:annotation>
           </as:Element>
-          <as:Element name="Name" path="/SheltersLookup/ProviderDetail/Name" namespace="" namespacePrefix="" exampleValue="%string%">
+          <as:Element name="Name" path="/SheltersLookup/ProviderLocation/Name" namespace="" namespacePrefix="" exampleValue="%string%">
             <as:Rule>
-              <as:constraint action="setLength(1-200)" xpath="//ProviderDetail/Name" />
+              <as:constraint action="setLength(1-255)" xpath="//ProviderLocation/Name" />
             </as:Rule>
-            <camed:annotation item="/SheltersLookup/ProviderDetail/Name">
-              <camed:documentation type="DBMapping">verify_SHELTERS.Providers.Name</camed:documentation>
+            <camed:annotation item="/SheltersLookup/ProviderLocation/Name">
+              <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.Name</camed:documentation>
             </camed:annotation>
           </as:Element>
-          <as:Element name="Description" path="/SheltersLookup/ProviderDetail/Description" namespace="" namespacePrefix="" exampleValue="%string%">
+          <as:Element name="ContactName" path="/SheltersLookup/ProviderLocation/ContactName" namespace="" namespacePrefix="" exampleValue="%string%">
             <as:Rule>
-              <as:constraint action="setLength(1-16777215)" xpath="//ProviderDetail/Description" />
-              <as:constraint action="makeOptional()" xpath="//ProviderDetail/Description" />
+              <as:constraint action="setLength(1-120)" xpath="//ProviderLocation/ContactName" />
             </as:Rule>
-            <camed:annotation item="/SheltersLookup/ProviderDetail/Description">
-              <camed:documentation type="DBMapping">verify_SHELTERS.Providers.Description</camed:documentation>
+            <camed:annotation item="/SheltersLookup/ProviderLocation/ContactName">
+              <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.ContactName</camed:documentation>
             </camed:annotation>
           </as:Element>
-          <as:Element name="URL" path="/SheltersLookup/ProviderDetail/URL" namespace="" namespacePrefix="" exampleValue="%string%">
+          <as:Element name="ContactPhoneValue" path="/SheltersLookup/ProviderLocation/ContactPhoneValue" namespace="" namespacePrefix="" exampleValue="%123456%">
             <as:Rule>
-              <as:constraint action="setLength(1-255)" xpath="//ProviderDetail/URL" />
-              <as:constraint action="makeOptional()" xpath="//ProviderDetail/URL" />
+              <as:constraint action="setNumberMask(##########)" xpath="//ProviderLocation/ContactPhoneValue" />
             </as:Rule>
-            <camed:annotation item="/SheltersLookup/ProviderDetail/URL">
-              <camed:documentation type="DBMapping">verify_SHELTERS.Providers.URL</camed:documentation>
+            <camed:annotation item="/SheltersLookup/ProviderLocation/ContactPhoneValue">
+              <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.ContactPhone</camed:documentation>
             </camed:annotation>
           </as:Element>
-          <as:Element name="ProviderLocation" path="/SheltersLookup/ProviderDetail/ProviderLocation" namespace="" namespacePrefix="">
+          <as:Element name="UnitsTotal" path="/SheltersLookup/ProviderLocation/UnitsTotal" namespace="" namespacePrefix="" exampleValue="%string%">
             <as:Rule>
-              <as:constraint action="makeRepeatable()" xpath="//ProviderDetail/ProviderLocation" />
+              <as:constraint action="makeMandatory()" />
             </as:Rule>
-            <camed:annotation item="//ProviderDetail/ProviderLocation">
-              <camed:documentation type="Definition">Provider Locations Information. Includes Services details</camed:documentation>
+            <camed:annotation item="/SheltersLookup/ProviderLocation/UnitsTotal">
+              <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsTotal</camed:documentation>
             </camed:annotation>
-            <as:Element name="LocationID" path="/SheltersLookup/ProviderDetail/ProviderLocation/LocationID" namespace="" namespacePrefix="" exampleValue="%123456%">
+          </as:Element>
+          <as:Element name="UnitsAvailable" path="/SheltersLookup/ProviderLocation/UnitsAvailable" namespace="" namespacePrefix="" exampleValue="%string%">
+            <as:Rule>
+              <as:constraint action="makeMandatory()" />
+            </as:Rule>
+            <camed:annotation item="/SheltersLookup/ProviderLocation/UnitsAvailable">
+              <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsAvailable</camed:documentation>
+            </camed:annotation>
+          </as:Element>
+          <as:Element name="UnitsOccupied" path="/SheltersLookup/ProviderLocation/UnitsOccupied" namespace="" namespacePrefix="" exampleValue="%string%">
+            <as:Rule>
+              <as:constraint action="makeMandatory()" />
+            </as:Rule>
+            <camed:annotation item="/SheltersLookup/ProviderLocation/UnitsOccupied">
+              <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsOccupied</camed:documentation>
+            </camed:annotation>
+          </as:Element>
+          <as:Element name="ProvidersDetails" path="/SheltersLookup/ProviderLocation/ProvidersDetails" namespace="" namespacePrefix="">
+            <as:Rule>
+              <as:constraint action="makeMandatory()" />
+            </as:Rule>
+            <camed:annotation item="//ProviderLocation/ProvidersDetails">
+              <camed:documentation type="Definition">Service Providers</camed:documentation>
+            </camed:annotation>
+            <as:Element name="ProviderID" path="/SheltersLookup/ProviderLocation/ProvidersDetails/ProviderID" namespace="" namespacePrefix="" exampleValue="%123456%">
               <as:Rule>
-                <as:constraint action="setNumberMask(##########)" xpath="//ProviderLocation/LocationID" />
+                <as:constraint action="setNumberMask(##########)" xpath="//ProvidersDetails/ProviderID" />
               </as:Rule>
-              <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/LocationID">
-                <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.LocationID</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/ProvidersDetails/ProviderID">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Providers.ProviderID</camed:documentation>
               </camed:annotation>
             </as:Element>
-            <as:Element name="Name" path="/SheltersLookup/ProviderDetail/ProviderLocation/Name" namespace="" namespacePrefix="" exampleValue="%string%">
+            <as:Element name="Name" path="/SheltersLookup/ProviderLocation/ProvidersDetails/Name" namespace="" namespacePrefix="" exampleValue="%string%">
               <as:Rule>
-                <as:constraint action="setLength(1-255)" xpath="//ProviderLocation/Name" />
+                <as:constraint action="setLength(1-200)" xpath="//ProvidersDetails/Name" />
               </as:Rule>
-              <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/Name">
-                <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.Name</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/ProvidersDetails/Name">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Providers.Name</camed:documentation>
               </camed:annotation>
             </as:Element>
-            <as:Element name="ContactName" path="/SheltersLookup/ProviderDetail/ProviderLocation/ContactName" namespace="" namespacePrefix="" exampleValue="%string%">
+            <as:Element name="Description" path="/SheltersLookup/ProviderLocation/ProvidersDetails/Description" namespace="" namespacePrefix="" exampleValue="%string%">
               <as:Rule>
-                <as:constraint action="setLength(1-120)" xpath="//ProviderLocation/ContactName" />
+                <as:constraint action="setLength(1-16777215)" xpath="//ProvidersDetails/Description" />
+                <as:constraint action="makeOptional()" xpath="//ProvidersDetails/Description" />
               </as:Rule>
-              <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/ContactName">
-                <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.ContactName</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/ProvidersDetails/Description">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Providers.Description</camed:documentation>
               </camed:annotation>
             </as:Element>
-            <as:Element name="ContactPhoneValue" path="/SheltersLookup/ProviderDetail/ProviderLocation/ContactPhoneValue" namespace="" namespacePrefix="" exampleValue="%123456%">
+            <as:Element name="URL" path="/SheltersLookup/ProviderLocation/ProvidersDetails/URL" namespace="" namespacePrefix="" exampleValue="%string%">
               <as:Rule>
-                <as:constraint action="setNumberMask(##########)" xpath="//ProviderLocation/ContactPhoneValue" />
+                <as:constraint action="setLength(1-255)" xpath="//ProvidersDetails/URL" />
+                <as:constraint action="makeOptional()" xpath="//ProvidersDetails/URL" />
               </as:Rule>
-              <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/ContactPhoneValue">
-                <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.ContactPhone</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/ProvidersDetails/URL">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Providers.URL</camed:documentation>
               </camed:annotation>
             </as:Element>
-            <as:Element name="UnitsTotal" path="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsTotal" namespace="" namespacePrefix="" exampleValue="%string%">
+          </as:Element>
+          <as:Element name="AddressDetails" path="/SheltersLookup/ProviderLocation/AddressDetails" namespace="" namespacePrefix="">
+            <as:Rule>
+              <as:constraint action="makeMandatory()" />
+            </as:Rule>
+            <camed:annotation item="//ProviderLocation/AddressDetails">
+              <camed:documentation type="Definition">Location Addresses with Geo Location information.</camed:documentation>
+            </camed:annotation>
+            <as:Element name="AddressID" path="/SheltersLookup/ProviderLocation/AddressDetails/AddressID" namespace="" namespacePrefix="" exampleValue="%123456%">
               <as:Rule>
-                <as:constraint action="makeMandatory()" />
+                <as:constraint action="setNumberMask(##########)" xpath="//AddressDetails/AddressID" />
               </as:Rule>
-              <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsTotal">
-                <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsTotal</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/AddressDetails/AddressID">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.AddressID</camed:documentation>
               </camed:annotation>
             </as:Element>
-            <as:Element name="UnitsAvailable" path="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsAvailable" namespace="" namespacePrefix="" exampleValue="%string%">
+            <as:Element name="Street" path="/SheltersLookup/ProviderLocation/AddressDetails/Street" namespace="" namespacePrefix="" exampleValue="%string%">
               <as:Rule>
-                <as:constraint action="makeMandatory()" />
+                <as:constraint action="setLength(1-2000)" xpath="//AddressDetails/Street" />
+                <as:constraint action="makeOptional()" xpath="//AddressDetails/Street" />
               </as:Rule>
-              <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsAvailable">
-                <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsAvailable</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/AddressDetails/Street">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Street</camed:documentation>
               </camed:annotation>
             </as:Element>
-            <as:Element name="UnitsOccupied" path="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsOccupied" namespace="" namespacePrefix="" exampleValue="%string%">
+            <as:Element name="City" path="/SheltersLookup/ProviderLocation/AddressDetails/City" namespace="" namespacePrefix="" exampleValue="%string%">
               <as:Rule>
-                <as:constraint action="makeMandatory()" />
+                <as:constraint action="setLength(1-200)" xpath="//AddressDetails/City" />
               </as:Rule>
-              <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/UnitsOccupied">
-                <camed:documentation type="DBMapping">verify_SHELTERS.ProviderLocations.UnitsOccupied</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/AddressDetails/City">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.City</camed:documentation>
               </camed:annotation>
             </as:Element>
-            <as:Element name="AddressDetails" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails" namespace="" namespacePrefix="">
+            <as:Element name="State" path="/SheltersLookup/ProviderLocation/AddressDetails/State" namespace="" namespacePrefix="" exampleValue="%string%">
               <as:Rule>
-                <as:constraint action="makeMandatory()" />
+                <as:constraint action="setLength(1-2)" xpath="//AddressDetails/State" />
               </as:Rule>
-              <camed:annotation item="//ProviderLocation/AddressDetails">
-                <camed:documentation type="Definition">Location Addresses with Geo Location information.</camed:documentation>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/AddressDetails/State">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.State</camed:documentation>
               </camed:annotation>
-              <as:Element name="AddressID" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/AddressID" namespace="" namespacePrefix="" exampleValue="%123456%">
-                <as:Rule>
-                  <as:constraint action="setNumberMask(##########)" xpath="//AddressDetails/AddressID" />
-                </as:Rule>
-                <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/AddressID">
-                  <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.AddressID</camed:documentation>
-                </camed:annotation>
-              </as:Element>
-              <as:Element name="Street" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/Street" namespace="" namespacePrefix="" exampleValue="%string%">
-                <as:Rule>
-                  <as:constraint action="setLength(1-2000)" xpath="//AddressDetails/Street" />
-                  <as:constraint action="makeOptional()" xpath="//AddressDetails/Street" />
-                </as:Rule>
-                <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/Street">
-                  <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Street</camed:documentation>
-                </camed:annotation>
-              </as:Element>
-              <as:Element name="City" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/City" namespace="" namespacePrefix="" exampleValue="%string%">
-                <as:Rule>
-                  <as:constraint action="setLength(1-200)" xpath="//AddressDetails/City" />
-                </as:Rule>
-                <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/City">
-                  <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.City</camed:documentation>
-                </camed:annotation>
-              </as:Element>
-              <as:Element name="State" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/State" namespace="" namespacePrefix="" exampleValue="%string%">
-                <as:Rule>
-                  <as:constraint action="setLength(1-2)" xpath="//AddressDetails/State" />
-                </as:Rule>
-                <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/State">
-                  <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.State</camed:documentation>
-                </camed:annotation>
-              </as:Element>
-              <as:Element name="ZIP" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/ZIP" namespace="" namespacePrefix="" exampleValue="%string%">
-                <as:Rule>
-                  <as:constraint action="setLength(1-5)" xpath="//AddressDetails/ZIP" />
-                </as:Rule>
-                <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/ZIP">
-                  <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.ZIP</camed:documentation>
-                </camed:annotation>
-              </as:Element>
-              <as:Element name="LatValue" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LatValue" namespace="" namespacePrefix="" exampleValue="%1234.00%">
-                <as:Rule>
-                  <as:constraint action="setLength(1-11)" xpath="//AddressDetails/LatValue" />
-                  <as:constraint action="setNumberMask(#########.##)" xpath="//AddressDetails/LatValue" />
-                </as:Rule>
-                <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LatValue">
-                  <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Lat</camed:documentation>
-                </camed:annotation>
-              </as:Element>
-              <as:Element name="LngValue" path="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LngValue" namespace="" namespacePrefix="" exampleValue="%1234.00%">
-                <as:Rule>
-                  <as:constraint action="setNumberMask(#########.##)" xpath="//AddressDetails/LngValue" />
-                  <as:constraint action="setLength(1-11)" xpath="//AddressDetails/LngValue" />
-                </as:Rule>
-                <camed:annotation item="/SheltersLookup/ProviderDetail/ProviderLocation/AddressDetails/LngValue">
-                  <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Lng</camed:documentation>
-                </camed:annotation>
-              </as:Element>
+            </as:Element>
+            <as:Element name="ZIP" path="/SheltersLookup/ProviderLocation/AddressDetails/ZIP" namespace="" namespacePrefix="" exampleValue="%string%">
+              <as:Rule>
+                <as:constraint action="setLength(1-5)" xpath="//AddressDetails/ZIP" />
+              </as:Rule>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/AddressDetails/ZIP">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.ZIP</camed:documentation>
+              </camed:annotation>
+            </as:Element>
+            <as:Element name="LatValue" path="/SheltersLookup/ProviderLocation/AddressDetails/LatValue" namespace="" namespacePrefix="" exampleValue="%1234.00%">
+              <as:Rule>
+                <as:constraint action="setNumberMask(#########.##)" xpath="//AddressDetails/LatValue" />
+                <as:constraint action="setLength(1-11)" xpath="//AddressDetails/LatValue" />
+              </as:Rule>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/AddressDetails/LatValue">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Lat</camed:documentation>
+              </camed:annotation>
+            </as:Element>
+            <as:Element name="LngValue" path="/SheltersLookup/ProviderLocation/AddressDetails/LngValue" namespace="" namespacePrefix="" exampleValue="%1234.00%">
+              <as:Rule>
+                <as:constraint action="setNumberMask(#########.##)" xpath="//AddressDetails/LngValue" />
+                <as:constraint action="setLength(1-11)" xpath="//AddressDetails/LngValue" />
+              </as:Rule>
+              <camed:annotation item="/SheltersLookup/ProviderLocation/AddressDetails/LngValue">
+                <camed:documentation type="DBMapping">verify_SHELTERS.Addresses.Lng</camed:documentation>
+              </camed:annotation>
             </as:Element>
           </as:Element>
         </as:Element>

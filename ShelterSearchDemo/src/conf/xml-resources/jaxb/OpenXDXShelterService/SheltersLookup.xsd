@@ -26,12 +26,15 @@
   <xsd:element name="SheltersLookup" id="d2e47">
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="ProviderDetail" minOccurs="1" maxOccurs="unbounded" id="d2e54">
+        <xsd:element name="ProviderLocation" minOccurs="1" maxOccurs="unbounded" id="d2e54">
+          <xsd:annotation>
+            <xsd:documentation>Provider Locations Information. Includes Services details</xsd:documentation>
+          </xsd:annotation>
           <xsd:complexType>
             <xsd:sequence>
-              <xsd:element name="ProviderID" minOccurs="1" maxOccurs="1" id="d2e60">
+              <xsd:element name="LocationID" minOccurs="1" maxOccurs="1" id="d2e66">
                 <xsd:annotation>
-                  <xsd:documentation>verify_SHELTERS.Providers.ProviderID</xsd:documentation>
+                  <xsd:documentation>verify_SHELTERS.ProviderLocations.LocationID</xsd:documentation>
                 </xsd:annotation>
                 <xsd:simpleType>
                   <xsd:restriction base="xsd:int">
@@ -40,43 +43,9 @@
                   </xsd:restriction>
                 </xsd:simpleType>
               </xsd:element>
-              <xsd:element name="Name" minOccurs="1" maxOccurs="1" id="d2e73">
+              <xsd:element name="Name" minOccurs="1" maxOccurs="1" id="d2e79">
                 <xsd:annotation>
-                  <xsd:documentation>verify_SHELTERS.Providers.Name</xsd:documentation>
-                </xsd:annotation>
-                <xsd:complexType>
-                  <xsd:simpleContent>
-                    <xsd:restriction base="xsd:anyType">
-                      <xsd:simpleType>
-                        <xsd:restriction base="xsd:string">
-                          <xsd:minLength value="1" />
-                          <xsd:maxLength value="200" />
-                        </xsd:restriction>
-                      </xsd:simpleType>
-                    </xsd:restriction>
-                  </xsd:simpleContent>
-                </xsd:complexType>
-              </xsd:element>
-              <xsd:element name="Description" minOccurs="0" maxOccurs="1" id="d2e86">
-                <xsd:annotation>
-                  <xsd:documentation>verify_SHELTERS.Providers.Description</xsd:documentation>
-                </xsd:annotation>
-                <xsd:complexType>
-                  <xsd:simpleContent>
-                    <xsd:restriction base="xsd:anyType">
-                      <xsd:simpleType>
-                        <xsd:restriction base="xsd:string">
-                          <xsd:minLength value="1" />
-                          <xsd:maxLength value="16777215" />
-                        </xsd:restriction>
-                      </xsd:simpleType>
-                    </xsd:restriction>
-                  </xsd:simpleContent>
-                </xsd:complexType>
-              </xsd:element>
-              <xsd:element name="URL" minOccurs="0" maxOccurs="1" id="d2e101">
-                <xsd:annotation>
-                  <xsd:documentation>verify_SHELTERS.Providers.URL</xsd:documentation>
+                  <xsd:documentation>verify_SHELTERS.ProviderLocations.Name</xsd:documentation>
                 </xsd:annotation>
                 <xsd:complexType>
                   <xsd:simpleContent>
@@ -91,15 +60,58 @@
                   </xsd:simpleContent>
                 </xsd:complexType>
               </xsd:element>
-              <xsd:element name="ProviderLocation" minOccurs="1" maxOccurs="unbounded" id="d2e116">
+              <xsd:element name="ContactName" minOccurs="1" maxOccurs="1" id="d2e92">
                 <xsd:annotation>
-                  <xsd:documentation>Provider Locations Information. Includes Services details</xsd:documentation>
+                  <xsd:documentation>verify_SHELTERS.ProviderLocations.ContactName</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:simpleContent>
+                    <xsd:restriction base="xsd:anyType">
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:string">
+                          <xsd:minLength value="1" />
+                          <xsd:maxLength value="120" />
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:restriction>
+                  </xsd:simpleContent>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ContactPhoneValue" minOccurs="1" maxOccurs="1" id="d2e105">
+                <xsd:annotation>
+                  <xsd:documentation>verify_SHELTERS.ProviderLocations.ContactPhone</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                  <xsd:restriction base="xsd:int">
+                    <xsd:totalDigits value="10" />
+                    <xsd:fractionDigits value="0" />
+                  </xsd:restriction>
+                </xsd:simpleType>
+              </xsd:element>
+              <xsd:element name="UnitsTotal" minOccurs="1" maxOccurs="1" type="UnitsTotalDefinition" id="d2e119">
+                <xsd:annotation>
+                  <xsd:documentation>verify_SHELTERS.ProviderLocations.UnitsTotal</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="UnitsAvailable" minOccurs="1" maxOccurs="1" type="UnitsAvailableDefinition" id="d2e133">
+                <xsd:annotation>
+                  <xsd:documentation>verify_SHELTERS.ProviderLocations.UnitsAvailable</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="UnitsOccupied" minOccurs="1" maxOccurs="1" type="UnitsOccupiedDefinition" id="d2e147">
+                <xsd:annotation>
+                  <xsd:documentation>verify_SHELTERS.ProviderLocations.UnitsOccupied</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element name="ProvidersDetails" minOccurs="1" maxOccurs="1" id="d2e161">
+                <xsd:annotation>
+                  <xsd:documentation>Service Providers</xsd:documentation>
                 </xsd:annotation>
                 <xsd:complexType>
                   <xsd:sequence>
-                    <xsd:element name="LocationID" minOccurs="1" maxOccurs="1" id="d2e128">
+                    <xsd:element name="ProviderID" minOccurs="1" maxOccurs="1" id="d2e174">
                       <xsd:annotation>
-                        <xsd:documentation>verify_SHELTERS.ProviderLocations.LocationID</xsd:documentation>
+                        <xsd:documentation>verify_SHELTERS.Providers.ProviderID</xsd:documentation>
                       </xsd:annotation>
                       <xsd:simpleType>
                         <xsd:restriction base="xsd:int">
@@ -108,9 +120,43 @@
                         </xsd:restriction>
                       </xsd:simpleType>
                     </xsd:element>
-                    <xsd:element name="Name" minOccurs="1" maxOccurs="1" id="d2e141">
+                    <xsd:element name="Name" minOccurs="1" maxOccurs="1" id="d2e187">
                       <xsd:annotation>
-                        <xsd:documentation>verify_SHELTERS.ProviderLocations.Name</xsd:documentation>
+                        <xsd:documentation>verify_SHELTERS.Providers.Name</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:restriction base="xsd:anyType">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1" />
+                                <xsd:maxLength value="200" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:restriction>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="Description" minOccurs="0" maxOccurs="1" id="d2e200">
+                      <xsd:annotation>
+                        <xsd:documentation>verify_SHELTERS.Providers.Description</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:restriction base="xsd:anyType">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1" />
+                                <xsd:maxLength value="16777215" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:restriction>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="URL" minOccurs="0" maxOccurs="1" id="d2e216">
+                      <xsd:annotation>
+                        <xsd:documentation>verify_SHELTERS.Providers.URL</xsd:documentation>
                       </xsd:annotation>
                       <xsd:complexType>
                         <xsd:simpleContent>
@@ -125,26 +171,18 @@
                         </xsd:simpleContent>
                       </xsd:complexType>
                     </xsd:element>
-                    <xsd:element name="ContactName" minOccurs="1" maxOccurs="1" id="d2e154">
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="AddressDetails" minOccurs="1" maxOccurs="1" id="d2e232">
+                <xsd:annotation>
+                  <xsd:documentation>Location Addresses with Geo Location information.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AddressID" minOccurs="1" maxOccurs="1" id="d2e245">
                       <xsd:annotation>
-                        <xsd:documentation>verify_SHELTERS.ProviderLocations.ContactName</xsd:documentation>
-                      </xsd:annotation>
-                      <xsd:complexType>
-                        <xsd:simpleContent>
-                          <xsd:restriction base="xsd:anyType">
-                            <xsd:simpleType>
-                              <xsd:restriction base="xsd:string">
-                                <xsd:minLength value="1" />
-                                <xsd:maxLength value="120" />
-                              </xsd:restriction>
-                            </xsd:simpleType>
-                          </xsd:restriction>
-                        </xsd:simpleContent>
-                      </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="ContactPhoneValue" minOccurs="1" maxOccurs="1" id="d2e167">
-                      <xsd:annotation>
-                        <xsd:documentation>verify_SHELTERS.ProviderLocations.ContactPhone</xsd:documentation>
+                        <xsd:documentation>verify_SHELTERS.Addresses.AddressID</xsd:documentation>
                       </xsd:annotation>
                       <xsd:simpleType>
                         <xsd:restriction base="xsd:int">
@@ -153,130 +191,95 @@
                         </xsd:restriction>
                       </xsd:simpleType>
                     </xsd:element>
-                    <xsd:element name="UnitsTotal" minOccurs="1" maxOccurs="1" type="UnitsTotalDefinition" id="d2e181">
+                    <xsd:element name="Street" minOccurs="0" maxOccurs="1" id="d2e258">
                       <xsd:annotation>
-                        <xsd:documentation>verify_SHELTERS.ProviderLocations.UnitsTotal</xsd:documentation>
-                      </xsd:annotation>
-                    </xsd:element>
-                    <xsd:element name="UnitsAvailable" minOccurs="1" maxOccurs="1" type="UnitsAvailableDefinition" id="d2e195">
-                      <xsd:annotation>
-                        <xsd:documentation>verify_SHELTERS.ProviderLocations.UnitsAvailable</xsd:documentation>
-                      </xsd:annotation>
-                    </xsd:element>
-                    <xsd:element name="UnitsOccupied" minOccurs="1" maxOccurs="1" type="UnitsOccupiedDefinition" id="d2e209">
-                      <xsd:annotation>
-                        <xsd:documentation>verify_SHELTERS.ProviderLocations.UnitsOccupied</xsd:documentation>
-                      </xsd:annotation>
-                    </xsd:element>
-                    <xsd:element name="AddressDetails" minOccurs="1" maxOccurs="1" id="d2e223">
-                      <xsd:annotation>
-                        <xsd:documentation>Location Addresses with Geo Location information.</xsd:documentation>
+                        <xsd:documentation>verify_SHELTERS.Addresses.Street</xsd:documentation>
                       </xsd:annotation>
                       <xsd:complexType>
-                        <xsd:sequence>
-                          <xsd:element name="AddressID" minOccurs="1" maxOccurs="1" id="d2e236">
-                            <xsd:annotation>
-                              <xsd:documentation>verify_SHELTERS.Addresses.AddressID</xsd:documentation>
-                            </xsd:annotation>
+                        <xsd:simpleContent>
+                          <xsd:restriction base="xsd:anyType">
                             <xsd:simpleType>
-                              <xsd:restriction base="xsd:int">
-                                <xsd:totalDigits value="10" />
-                                <xsd:fractionDigits value="0" />
+                              <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1" />
+                                <xsd:maxLength value="2000" />
                               </xsd:restriction>
                             </xsd:simpleType>
-                          </xsd:element>
-                          <xsd:element name="Street" minOccurs="0" maxOccurs="1" id="d2e249">
-                            <xsd:annotation>
-                              <xsd:documentation>verify_SHELTERS.Addresses.Street</xsd:documentation>
-                            </xsd:annotation>
-                            <xsd:complexType>
-                              <xsd:simpleContent>
-                                <xsd:restriction base="xsd:anyType">
-                                  <xsd:simpleType>
-                                    <xsd:restriction base="xsd:string">
-                                      <xsd:minLength value="1" />
-                                      <xsd:maxLength value="2000" />
-                                    </xsd:restriction>
-                                  </xsd:simpleType>
-                                </xsd:restriction>
-                              </xsd:simpleContent>
-                            </xsd:complexType>
-                          </xsd:element>
-                          <xsd:element name="City" minOccurs="1" maxOccurs="1" id="d2e264">
-                            <xsd:annotation>
-                              <xsd:documentation>verify_SHELTERS.Addresses.City</xsd:documentation>
-                            </xsd:annotation>
-                            <xsd:complexType>
-                              <xsd:simpleContent>
-                                <xsd:restriction base="xsd:anyType">
-                                  <xsd:simpleType>
-                                    <xsd:restriction base="xsd:string">
-                                      <xsd:minLength value="1" />
-                                      <xsd:maxLength value="200" />
-                                    </xsd:restriction>
-                                  </xsd:simpleType>
-                                </xsd:restriction>
-                              </xsd:simpleContent>
-                            </xsd:complexType>
-                          </xsd:element>
-                          <xsd:element name="State" minOccurs="1" maxOccurs="1" id="d2e278">
-                            <xsd:annotation>
-                              <xsd:documentation>verify_SHELTERS.Addresses.State</xsd:documentation>
-                            </xsd:annotation>
-                            <xsd:complexType>
-                              <xsd:simpleContent>
-                                <xsd:restriction base="xsd:anyType">
-                                  <xsd:simpleType>
-                                    <xsd:restriction base="xsd:string">
-                                      <xsd:minLength value="1" />
-                                      <xsd:maxLength value="2" />
-                                    </xsd:restriction>
-                                  </xsd:simpleType>
-                                </xsd:restriction>
-                              </xsd:simpleContent>
-                            </xsd:complexType>
-                          </xsd:element>
-                          <xsd:element name="ZIP" minOccurs="1" maxOccurs="1" id="d2e291">
-                            <xsd:annotation>
-                              <xsd:documentation>verify_SHELTERS.Addresses.ZIP</xsd:documentation>
-                            </xsd:annotation>
-                            <xsd:complexType>
-                              <xsd:simpleContent>
-                                <xsd:restriction base="xsd:anyType">
-                                  <xsd:simpleType>
-                                    <xsd:restriction base="xsd:string">
-                                      <xsd:minLength value="1" />
-                                      <xsd:maxLength value="5" />
-                                    </xsd:restriction>
-                                  </xsd:simpleType>
-                                </xsd:restriction>
-                              </xsd:simpleContent>
-                            </xsd:complexType>
-                          </xsd:element>
-                          <xsd:element name="LatValue" minOccurs="1" maxOccurs="1" id="d2e304">
-                            <xsd:annotation>
-                              <xsd:documentation>verify_SHELTERS.Addresses.Lat</xsd:documentation>
-                            </xsd:annotation>
-                            <xsd:simpleType>
-                              <xsd:restriction base="xsd:decimal">
-                                <xsd:totalDigits value="11" />
-                                <xsd:fractionDigits value="2" />
-                              </xsd:restriction>
-                            </xsd:simpleType>
-                          </xsd:element>
-                          <xsd:element name="LngValue" minOccurs="1" maxOccurs="1" id="d2e319">
-                            <xsd:annotation>
-                              <xsd:documentation>verify_SHELTERS.Addresses.Lng</xsd:documentation>
-                            </xsd:annotation>
-                            <xsd:simpleType>
-                              <xsd:restriction base="xsd:decimal">
-                                <xsd:totalDigits value="11" />
-                                <xsd:fractionDigits value="2" />
-                              </xsd:restriction>
-                            </xsd:simpleType>
-                          </xsd:element>
-                        </xsd:sequence>
+                          </xsd:restriction>
+                        </xsd:simpleContent>
                       </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="City" minOccurs="1" maxOccurs="1" id="d2e273">
+                      <xsd:annotation>
+                        <xsd:documentation>verify_SHELTERS.Addresses.City</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:restriction base="xsd:anyType">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1" />
+                                <xsd:maxLength value="200" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:restriction>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="State" minOccurs="1" maxOccurs="1" id="d2e287">
+                      <xsd:annotation>
+                        <xsd:documentation>verify_SHELTERS.Addresses.State</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:restriction base="xsd:anyType">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1" />
+                                <xsd:maxLength value="2" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:restriction>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="ZIP" minOccurs="1" maxOccurs="1" id="d2e300">
+                      <xsd:annotation>
+                        <xsd:documentation>verify_SHELTERS.Addresses.ZIP</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:complexType>
+                        <xsd:simpleContent>
+                          <xsd:restriction base="xsd:anyType">
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:minLength value="1" />
+                                <xsd:maxLength value="5" />
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:restriction>
+                        </xsd:simpleContent>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="LatValue" minOccurs="1" maxOccurs="1" id="d2e313">
+                      <xsd:annotation>
+                        <xsd:documentation>verify_SHELTERS.Addresses.Lat</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:totalDigits value="11" />
+                          <xsd:fractionDigits value="2" />
+                        </xsd:restriction>
+                      </xsd:simpleType>
+                    </xsd:element>
+                    <xsd:element name="LngValue" minOccurs="1" maxOccurs="1" id="d2e328">
+                      <xsd:annotation>
+                        <xsd:documentation>verify_SHELTERS.Addresses.Lng</xsd:documentation>
+                      </xsd:annotation>
+                      <xsd:simpleType>
+                        <xsd:restriction base="xsd:decimal">
+                          <xsd:totalDigits value="11" />
+                          <xsd:fractionDigits value="2" />
+                        </xsd:restriction>
+                      </xsd:simpleType>                      
                     </xsd:element>
                   </xsd:sequence>
                 </xsd:complexType>
@@ -293,9 +296,9 @@
   <!-- Local simpleTypes (default namespace) 
  
 -->
-  <xsd:simpleType name="ProviderIDDefinition">
+  <xsd:simpleType name="LocationIDDefinition">
     <xsd:annotation>
-      <xsd:documentation>The type for ProviderID.</xsd:documentation>
+      <xsd:documentation>The type for LocationID.</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:int">
       <xsd:totalDigits value="10" />
@@ -308,34 +311,7 @@
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
       <xsd:minLength value="1" />
-      <xsd:maxLength value="200" />
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="DescriptionDefinition">
-    <xsd:annotation>
-      <xsd:documentation>The type for Description.</xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1" />
-      <xsd:maxLength value="16777215" />
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="URLDefinition">
-    <xsd:annotation>
-      <xsd:documentation>The type for URL.</xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1" />
       <xsd:maxLength value="255" />
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="LocationIDDefinition">
-    <xsd:annotation>
-      <xsd:documentation>The type for LocationID.</xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:int">
-      <xsd:totalDigits value="10" />
-      <xsd:fractionDigits value="0" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="ContactNameDefinition">
@@ -373,6 +349,33 @@
       <xsd:documentation>The type for UnitsOccupied.</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+  <xsd:simpleType name="ProviderIDDefinition">
+    <xsd:annotation>
+      <xsd:documentation>The type for ProviderID.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:int">
+      <xsd:totalDigits value="10" />
+      <xsd:fractionDigits value="0" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DescriptionDefinition">
+    <xsd:annotation>
+      <xsd:documentation>The type for Description.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="16777215" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="URLDefinition">
+    <xsd:annotation>
+      <xsd:documentation>The type for URL.</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="255" />
+    </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="AddressIDDefinition">
     <xsd:annotation>

@@ -2,6 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/home/serega/NetBeansProjects/ShelterSearchDemo/../../Work/Chicago-FluShot/GeoCodes.xsd" uri="src/conf/xml-resources/jaxb/GeoCodes/GeoCodes.xsd"/>
     <system systemId="file:/home/serega/NetBeansProjects/ShelterSearchDemo/../../Work/Shelter%20POC/Shelters.xsd" uri="src/conf/xml-resources/jaxb/OpenXDXShelterService/Shelters.xsd"/>
-    <system systemId="file:/home/serega/Repo/VerifyXML/OpenXDXSheltersDemoService/ShelterSearchDemo/../CAM/SheltersLookup.xsd" uri="src/conf/xml-resources/jaxb/OpenXDXShelterService/SheltersLookup.xsd"/>
     <system systemId="file:/home/serega/Repo/VerifyXML/OpenXDXSheltersDemoService/ShelterSearchDemo/../CAM/GeoCodes.xsd" uri="src/conf/xml-resources/jaxb/GeoCodes/GeoCodes.xsd"/>
+    <system systemId="file:/home/serega/Repo/VerifyXML/OpenXDXSheltersDemoService/ShelterSearchDemo/../CAM/SheltersLookup.xsd" uri="src/conf/xml-resources/jaxb/OpenXDXShelterService/SheltersLookup.xsd"/>
 </catalog>

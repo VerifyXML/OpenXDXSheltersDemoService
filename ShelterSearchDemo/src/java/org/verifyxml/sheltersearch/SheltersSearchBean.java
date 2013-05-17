@@ -60,8 +60,7 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 import org.verifyxml.jaxb.SheltersLookup;
-import org.verifyxml.jaxb.SheltersLookup.ProviderDetail;
-import org.verifyxml.jaxb.SheltersLookup.ProviderDetail.ProviderLocation;
+import org.verifyxml.jaxb.SheltersLookup.ProviderLocation;
 import org.verifyxml.sheltersearch.handler.GeoSearchHandler;
 
 /**
@@ -80,13 +79,13 @@ public class SheltersSearchBean implements Serializable {
     // Bean properties
     private int zipSearch;
     private int searchRadius = 0;
-    private transient List<ProviderDetail> providerDetails;
+    private transient List<ProviderLocation> providerLocations;
     private transient Map<String,Marker> resultMarkers;
     private transient MapModel mapModel;    
     private Marker marker;  
     private LatLng mapCenter;
-    private int zoomLevel = 12;
-    private transient String selectedProviderId;  
+    private int zoomLevel = 5;
+    private transient String selectedLocationId;  
         
     /**
      * Creates a new instance of SheltersSearchBean
@@ -111,8 +110,8 @@ public class SheltersSearchBean implements Serializable {
         this.searchRadius = searchRadius;
     }
 
-    public List<ProviderDetail> getProviderDetail() {
-        return providerDetails;
+    public List<ProviderLocation> getProviderLocations() {
+        return providerLocations;
     }
 
     /**
@@ -123,7 +122,7 @@ public class SheltersSearchBean implements Serializable {
         // Reset map and providers
         mapModel = new DefaultMapModel();
         resultMarkers = new HashMap<String, Marker>();
-        providerDetails = new ArrayList<ProviderDetail>();
+        providerLocations = new ArrayList<ProviderLocation>();
         mapCenter = null;
         zoomLevel = 12;
         
@@ -134,7 +133,7 @@ public class SheltersSearchBean implements Serializable {
                 GeoSearchHandler geoSearchService = new GeoSearchHandler();
                 
                 // Get Zip codes for specified radius
-                Geonames geocodes = geoSearchService.getGeoCodes(Integer.toString(zipSearch), Integer.toString(searchRadius));
+                Geonames geocodes = geoSearchService.getGeoCodes(String.format("%05d",zipSearch), Integer.toString(searchRadius));
 
                 // Build Zip codes list
                 StringBuilder zipList = new StringBuilder();
@@ -154,32 +153,30 @@ public class SheltersSearchBean implements Serializable {
                 if(zipList.length() > 0){
                     
                     SheltersLookup providersLookup = openXDXService.getSheltersData(zipList.toString());
-                    
-                    if(providersLookup != null && !providersLookup.getProviderDetail().isEmpty()){
-                        providerDetails = providersLookup.getProviderDetail();
-                        if(providerDetails != null && !providerDetails.isEmpty()){
-                            for(ProviderDetail details:providerDetails){
-                                for(ProviderLocation providerLocation : details.getProviderLocation()){
-                                    Marker pharmacyMarker = null;
-                                    //FIXME temporary check for dummy data
-                                    if(!providerLocation.getName().getValue().equals("string")){
-                                        pharmacyMarker =  new Marker(
-                                            new LatLng(
-                                                Double.parseDouble(providerLocation.getAddressDetails().getLatValue().toString()), 
-                                                Double.parseDouble(providerLocation.getAddressDetails().getLngValue().toString())), 
-                                            providerLocation.getName().getValue(), providerLocation);
-                                    }
-                                    if(pharmacyMarker != null){
-                                        resultMarkers.put(Integer.toString(providerLocation.getLocationID()), pharmacyMarker);
-                                        mapModel.addOverlay(pharmacyMarker);  
-                                    }
+                                        
+                    if(providersLookup != null && !providersLookup.getProviderLocation().isEmpty()){
+                        providerLocations = providersLookup.getProviderLocation();
+                        if(providerLocations != null && !providerLocations.isEmpty()){
+                            for(ProviderLocation providerLocation:providerLocations){
+                                Marker pharmacyMarker = null;
+                                //FIXME temporary check for dummy data
+                                if(!providerLocation.getName().getValue().equals("string")){
+                                    pharmacyMarker =  new Marker(
+                                        new LatLng(
+                                            Double.parseDouble(providerLocation.getAddressDetails().getLatValue().toString()), 
+                                            Double.parseDouble(providerLocation.getAddressDetails().getLngValue().toString())), 
+                                        providerLocation.getName().getValue(), providerLocation);
+                                }
+                                if(pharmacyMarker != null){
+                                    resultMarkers.put(Integer.toString(providerLocation.getLocationID()), pharmacyMarker);
+                                    mapModel.addOverlay(pharmacyMarker);  
                                 }
                             }
                             if(!resultMarkers.isEmpty()){
-                                mapCenter = new LatLng(Double.parseDouble(providerDetails.get(0).getProviderLocation().get(0).getAddressDetails().getLatValue().toString()), 
-                                        Double.parseDouble(providerDetails.get(0).getProviderLocation().get(0).getAddressDetails().getLngValue().toString()));
+                                mapCenter = new LatLng(Double.parseDouble(providerLocations.get(0).getAddressDetails().getLatValue().toString()), 
+                                        Double.parseDouble(providerLocations.get(0).getAddressDetails().getLngValue().toString()));
                                 zoomLevel = 15;
-                                resultMarkers.get(Integer.toString(providerDetails.get(0).getProviderLocation().get(0).getLocationID())).setIcon(ARROW_IMAGE_URL);
+                                resultMarkers.get(Integer.toString(providerLocations.get(0).getLocationID())).setIcon(ARROW_IMAGE_URL);
                             }
                         }
                     }                   
@@ -210,8 +207,8 @@ public class SheltersSearchBean implements Serializable {
         return providerLocation;  
     } 
 
-    public Marker getResultMarker(String providerID){
-        return resultMarkers.get(providerID);
+    public Marker getResultMarker(String locationID){
+        return resultMarkers.get(locationID);
     }
     
     public String onResultSelect() {
@@ -220,29 +217,29 @@ public class SheltersSearchBean implements Serializable {
             for(Marker m:resultMarkers.values()){
                 m.setIcon("");
             }
-            if(selectedProviderId != null && resultMarkers.containsKey(selectedProviderId)){
-                resultMarkers.get(selectedProviderId).setIcon(ARROW_IMAGE_URL);      
+            if(selectedLocationId != null && resultMarkers.containsKey(selectedLocationId)){
+                resultMarkers.get(selectedLocationId).setIcon(ARROW_IMAGE_URL);      
             }
         }
         return null;
     }  
 
-    public String getSelectedProviderId() {
-        return selectedProviderId;
+    public String getSelectedLocationId() {
+        return selectedLocationId;
     }
 
-    public void setSelectedProviderId(String selectedProviderId) {
+    public void setSelectedLocationId(String selectedLocationId) {
         if(resultMarkers != null){
             for(Marker m:resultMarkers.values()){
                 m.setIcon("");
             }
-            if(resultMarkers.containsKey(selectedProviderId)){
-                resultMarkers.get(selectedProviderId).setIcon(ARROW_IMAGE_URL); 
-                mapCenter = resultMarkers.get(selectedProviderId).getLatlng();
+            if(resultMarkers.containsKey(selectedLocationId)){
+                resultMarkers.get(selectedLocationId).setIcon(ARROW_IMAGE_URL); 
+                mapCenter = resultMarkers.get(selectedLocationId).getLatlng();
                 zoomLevel = 15;
             }
         }
-        this.selectedProviderId = selectedProviderId;
+        this.selectedLocationId = selectedLocationId;
         
     }
 
